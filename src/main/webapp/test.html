@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="top-bar-right">
+            <ul>
+                <li><a href="#shared">Shared</a> </li>
+                <li><a class="active" href="#home">USERNAME#ID</a></li>
+                <li><a href="#logout">LOGOUT</a></li>
+            </ul>
+        </div>
+        <div class="top-bar-left">
+            <ul>
+                <li>UBERSITE</li>
+            </ul>
+        </div>
+    </div>
+
+    <aside>
+        <p>
+            root<br>&#9492;&#9472;&#9472;username<br>
+            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#9500;&#9472;&#9472;dir1<br>
+            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#9500;&#9472;&#9472;dir2<br>
+            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#9492;&#9472;&#9472;dir3
+        </p>
+    </aside>
+
+    <div id="contextMenu" class="context-menu"
+         style="display:none">
+        <ul>
+            <li><a href="#">Element-1</a></li>
+            <li><a href="#">Element-2</a></li>
+            <li><a href="#">Element-3</a></li>
+            <li><a href="#">Element-4</a></li>
+            <li><a href="#">Element-5</a></li>
+            <li><a href="#">Element-6</a></li>
+            <li><a href="#">Element-7</a></li>
+        </ul>
+    </div>
+
+    <button id="myBtn">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <ul class="share-mod-switcher">
+                <li>
+                    <h3>
+                        <label>
+                            <input type="radio" name="share-mode" onclick="showToUser()" checked>
+                        </label>
+                        Add user to share
+                    </h3>
+                    <div class="hidden-div" id="share-with-user-div">
+                        <div id="fileNameToShare" value=""></div>
+                        username:<input id="userToShare" type="text"><br>
+                        <label >Writable:</label>
+                        <input id="writable" type="checkbox" checked>
+                        <button id="shareButton" onclick="share()">Share</button>
+                    </div>
+                </li>
+                <li><h3><input type="radio" name="share-mode" onclick="showToLink()" checked>Share by link</h3>
+                    <div class="hidden-div" id="share-by-link-div">
+                        <div class="link-holder">
+                            <a href="#">random link</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>Some text in the Modal..</p>
+        </div>
+
+    </div>
+
+    <div class="file-listing">
+        <div class="folder">
+            it's a folder
+        </div>
+        <div class="file">
+            it's a file
+        </div>
+    </div>
+    <p>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br>fff<br></p>
+
+</body>
+</html>
+
+<script>
+
+    function dropShareModSelectors(){
+        modal.style.display = "none";
+        let selectors = document.querySelector('input[name="share-mode"]:checked');
+        if(selectors) selectors.checked = false;
+        document.getElementById("share-with-user-div").style.display = "none";
+        document.getElementById("share-by-link-div").style.display = "none";
+    }
+
+    onload = function (){
+        dropShareModSelectors();
+    }
+
+    let modal = document.getElementById("myModal");
+    let span = document.getElementsByClassName("close")[0];
+    let btn = document.getElementById("myBtn");
+
+    btn.onclick = function (){modal.style.display = "block";}
+
+    span.onclick = function() {
+        dropShareModSelectors();
+    }
+
+    function showToUser(){
+        document.getElementById("share-with-user-div").style.display = "block";
+        document.getElementById("share-by-link-div").style.display = "none";
+    }
+
+    function showToLink(){
+        document.getElementById("share-with-user-div").style.display = "none";
+        document.getElementById("share-by-link-div").style.display = "block";
+    }
+
+    document.onclick = hideMenu;
+    document.oncontextmenu = rightClick;
+
+    function hideMenu() {
+        document.getElementById("contextMenu").style.display = "none"
+    }
+
+    function rightClick(e) {
+        e.preventDefault();
+        let menu = document.getElementById("contextMenu")
+
+        if (menu.style.display === "block"){
+            hideMenu();
+        }
+        menu.style.display = 'block';
+        menu.style.left = e.pageX + "px";
+        menu.style.top = e.pageY + "px";
+
+    }
+
+    (function() {
+
+        "use strict";
+
+        let taskItems = document.querySelectorAll(".file-listing");
+
+        for ( let i = 0, len = taskItems.length; i < len; i++ ) {
+            contextMenuListener(taskItems[i]);
+        }
+
+        function contextMenuListener(el) {
+            el.addEventListener( "contextmenu", function(e) {
+                console.log(e, el);
+            });
+        }
+
+        document.addEventListener( "contextmenu", function(e) {
+            // console.log(e);
+        });
+
+    })();
+</script>
